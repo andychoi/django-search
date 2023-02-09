@@ -30,8 +30,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "quotes.apps.QuotesConfig",
+    "contents.apps.ContentsConfig",
     "debug_toolbar",
+    'django_extensions',
     "django.contrib.postgres",
 ]
 
