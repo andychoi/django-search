@@ -11,6 +11,6 @@ class Command(BaseCommand):
         fake = Faker()
 
         for _ in range(10000):
-            Content.objects.create(name=fake.name(), content=fake.text())
+            Content.objects.create(title=fake.name(), content=fake.text())
 
         print("Completed!!! Check your database.")

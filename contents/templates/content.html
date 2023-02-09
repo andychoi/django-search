@@ -13,20 +13,23 @@
 
     <h1>All Contents</h1>
 
-    <br><br>
-
-    <form action="{% url 'search_results' %}" method="get">
+    {% csrf_token %}
+    <!-- <form action="{ url 'search_results' }" method="get">
       <input type="search" name="q" placeholder="Search by name or content..." class="form-control">
+    </form> -->
+
+    <br><br>
+    <form action="{% url 'headline_search_results' %}" method="get">
+      <input type="search" name="q" placeholder="Search by name or content...(headline)" class="form-control">
     </form>
 
     <br><br>
 
-    {% for content in contents %}
-      <ul>
-        <li>{{ content.content }} - <b>By <i>{{ content.name }}</i></b></li>
-      </ul>
-    {% empty %}
-      <p>The database is empty. Add some contents.</p>
+    {% for object in contents %}
+      <h2>{{object.title}}</h2>
+      <p>{{object.content | truncatechars:255}}</p>
+      {% empty %}
+      <h2>No Results</h2>
     {% endfor %}
 
     <br><br>

@@ -27,20 +27,20 @@ class Command(BaseCommand):
         fake = Faker()
 
         results = get_data_from_file('contents/management/commands/sample_form.pdf')
-        Content.objects.create(name=fake.name(), content=results["content"])
+        Content.objects.create(title=fake.name(), content=results["content"])
         print("Completed!!! record created using tika - sample_form.pdf")
 
         results = get_data_from_file('contents/management/commands/sample.pdf')
-        Content.objects.create(name=fake.name(), content=results["content"])
+        Content.objects.create(title=fake.name(), content=results["content"])
         print("Completed!!! record created using tika - sample.pdf")
 
         pdf_url = "https://www.irs.gov/pub/irs-pdf/p515.pdf"
         results = get_data_from_web(pdf_url)
-        Content.objects.create(name=fake.name(), content=results["content"])
+        Content.objects.create(title=fake.name(), content=results["content"])
         print("Completed!!! record created using tika - IRS web p515.pdf")
 
         pdf_url = "https://www.bl.uk/learning/resources/pdf/makeanimpact/sw-transcripts.pdf"
         results = get_data_from_web(pdf_url)
         print(results["status"])
-        Content.objects.create(name=fake.name(), content=results["content"])
+        Content.objects.create(title=fake.name(), content=results["content"])
         print("Completed!!! record created using tika")

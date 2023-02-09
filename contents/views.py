@@ -52,7 +52,7 @@ class ContentList(ListView):
 
 #     def get_queryset(self):
 #         query = self.request.GET.get("q")
-#         return Content.objects.annotate(search=SearchVector("name", "content")).filter(
+#         return Content.objects.annotate(search=SearchVector("title", "content")).filter(
 #             search=query
 #         )
 
@@ -65,7 +65,7 @@ class ContentList(ListView):
 
 #     def get_queryset(self):
 #         query = self.request.GET.get("q")
-#         search_vector = SearchVector("name", "content")
+#         search_vector = SearchVector("title", "content")
 #         search_query = SearchQuery(query)
 #         return (
 #             Content.objects.annotate(
@@ -84,7 +84,7 @@ class ContentList(ListView):
 
 #     def get_queryset(self):
 #         query = self.request.GET.get("q")
-#         search_vector = SearchVector("name", weight="B") + SearchVector(
+#         search_vector = SearchVector("title", weight="B") + SearchVector(
 #             "content", weight="A"
 #         )
 #         search_query = SearchQuery(query)
@@ -96,20 +96,23 @@ class ContentList(ListView):
 
 
 # Preview
-# class SearchResultsList(ListView):
-#     model = Content
-#     context_object_name = "contents"
-#     template_name = "search.html"
+class HeadlineSearchResultsList(ListView):
+    model = Content
+    context_object_name = "contents"
+    template_name = "search.html"
 
-#     def get_queryset(self):
-#         query = self.request.GET.get("q")
-#         search_vector = SearchVector("name", "content")
-#         search_query = SearchQuery(query)
-#         search_headline = SearchHeadline("content", search_query)
-#         return Content.objects.annotate(
-#             search=search_vector,
-#             rank=SearchRank(search_vector, search_query)
-#         ).annotate(headline=search_headline).filter(search=search_query).order_by("-rank")
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        search_vector = SearchVector("title", "content")
+        search_query = SearchQuery(query)
+        search_headline = SearchHeadline("content", search_query, start_sel='<mark>', stop_sel='</mark>')
+
+        # return Content.objects.annotate(search_headline)
+                
+        return Content.objects.annotate(
+            search=search_vector,
+            rank=SearchRank(search_vector, search_query)
+        ).annotate(headline=search_headline).filter(search=search_query).order_by("-rank")
 
 
 # SearchVectorField

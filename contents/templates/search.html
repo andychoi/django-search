@@ -13,22 +13,20 @@
 
     <h1 style="color: red;">Search Results</h1>
 
-    <br><br>
-
-    {% for content in contents %}
-      <ul>
-        <!-- <li>{{ content.headline | safe }} - <b>By <i>{{ content.name }}</i></b></li> -->
-        <li>{{ content.content | safe }} - <b>By <i>{{ content.name }}</i></b></li>
-      </ul>
-    {% empty %}
-      <p>No results found. Try again.</p>
-    {% endfor %}
-
-    <br><br>
+    <ul>
+      {% for content in contents %}
+        <li>
+          <h2>{{content.title}}</h2>
+          <p>{{content.headline | safe}}</p>
+        </li>
+      <!-- <li>{{ content.content | safe }}</li> -->
+      {% empty %}
+        <p>No results found. Try again.</p>
+      {% endfor %}
+    </ul>
 
     <a href="{% url 'all_contents' %}" class="btn btn-primary">All Contents</a>
 
-    <br><br>
   </div>
 
 </body>
